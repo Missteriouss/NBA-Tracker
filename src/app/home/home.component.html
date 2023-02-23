@@ -1,0 +1,42 @@
+<div class="row mt-3">
+    <div class="col-6">
+        <select class="form-select" aria-label="Select Team" (change)="onTeamSelected($event)">
+            <option default disabled value="0" selected>Pick a team</option>
+            <option *ngFor="let team of teamOptions" [value]=team.id>{{team.full_name}}</option>
+        </select>
+    </div>
+    <div class="col-6">
+        <a class="btn btn-primary" (click)="trackSelectedTeam()">Track Team</a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-3" *ngFor="let team of trackingTeams">
+        <div class="card mr-2">
+            <div class="card-body">
+                <div class="card-top">
+                    <h5 class="card-title">{{team.full_name}} [{{team.abbreviation}}]</h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="removeCard(team.id)" [id]="'remove'+team.abbreviation"></button>
+                </div>
+                <p>{{team.conference}} conference</p>
+                <div class="card-main">
+                    <div class="card-data">
+                        <p>Results of past 12 days:</p>
+                        <p>
+                            <span *ngFor="let result of team.scoreResults" [ngClass]="result.home_team_score > result.visitor_team_score ? 'result-won':'result-lost'">
+                                {{result.home_team_score > result.visitor_team_score ? 'W' : 'L'}}
+                            </span>
+                        </p>
+                        <p>Avg points scored: {{ getHomeScoreAverage(team) }}</p>
+                        <p>Avg points conceded: {{ getVisitorScoreAverage(team) }}</p>
+                    </div>
+                    <div class="card-img">
+                        <img [src]="'https://interstate21.com/nba-logos/' + team.abbreviation + '.png'" alt="logo">
+                    </div>
+                </div>
+                <a class="btn btn-primary" [id]="'results'+team.abbreviation" [routerLink]="['/results', team.abbreviation]" [state]="team">See Game Results >></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading" *ngIf="loading">Loading</div>
