@@ -19,7 +19,7 @@ export interface Data {
 export interface Meta {
   total_pages: number;
   current_page: number;
-  next_page?: any;
+  next_page: number;
   per_page: number;
   total_count: number;
 }
