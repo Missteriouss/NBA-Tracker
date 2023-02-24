@@ -159,5 +159,11 @@
   text-align: center;
 }
 
-.result-won{background: #86ff86;}
-.result-lost{background: #ff8a8a;} 
+.result-won{
+  background: #86ff86;
+  font-weight: bold;
+}
+.result-lost{
+  background: #ff8a8a;
+  font-weight: bold;
+} 
