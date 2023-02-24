@@ -26,8 +26,8 @@
                                 {{result.home_team_score > result.visitor_team_score ? 'W' : 'L'}}
                             </span>
                         </p>
-                        <p>Avg points scored: {{ getHomeScoreAverage(team) }}</p>
-                        <p>Avg points conceded: {{ getVisitorScoreAverage(team) }}</p>
+                      <p>Avg points scored: <strong>{{ getHomeScoreAverage(team) }}</strong></p>
+                      <p>Avg points conceded: <strong>{{ getVisitorScoreAverage(team) }}</strong></p>
                     </div>
                     <div class="card-img">
                         <img [src]="'https://interstate21.com/nba-logos/' + team.abbreviation + '.png'" alt="logo">
