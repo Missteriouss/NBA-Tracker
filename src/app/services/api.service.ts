@@ -61,16 +61,6 @@ export class ApiService {
     return this.http.get<LastResults>(`https://free-nba.p.rapidapi.com/games?page=0&team_ids[]=${team_id}${dates}`, { headers: this.header })
   }
 
-  getTodaysDate() {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    let mm = today.getMonth() + 1; // Months start at 0!
-    let dd = today.getDate();
-
-    return yyyy + '-' + mm + '-' + dd;
-    // Ex: 2012-12-02
-  }
-
   getLast12Dates() {
     const today = new Date();
     let last12Dates = '';
