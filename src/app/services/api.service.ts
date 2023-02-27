@@ -10,16 +10,18 @@ export interface Team {
   division: string;
   full_name: string;
   name: string;
-  scoreResults: Array<{
-    home_team_score: number,
-    visitor_team_score: number,
-    home_team: {
-      abbreviation: string;
-    },
-    visitor_team: {
-      abbreviation: string;
-    }
-  }>;
+  scoreResults: Array<ScoreResult>;
+}
+
+export interface ScoreResult {
+  home_team_score: number,
+  visitor_team_score: number,
+  home_team: {
+    abbreviation: string;
+  },
+  visitor_team: {
+    abbreviation: string;
+  }
 }
 
 export interface Meta {
@@ -36,20 +38,9 @@ export interface APIResult {
 }
 
 export interface LastResults {
-  data: Array<{
-    home_team_score: number,
-    visitor_team_score: number,
-    home_team: {
-      abbreviation: string;
-    },
-    visitor_team: {
-      abbreviation: string;
-    }
-  }>;
-
+  data: Array<ScoreResult>;
   meta: Meta;
 }
-
 
 @Injectable({
   providedIn: 'root'
