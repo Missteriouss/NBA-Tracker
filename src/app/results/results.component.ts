@@ -1,20 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Team } from '../services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-export interface Team {
-  id: number;
-  abbreviation: string;
-  city: string;
-  conference: string;
-  division: string;
-  full_name: string;
-  name: string;
-  scoreResults? : {
-    home_team_score: number,
-    visitor_team_score: number
-  }
-}
 
 @Component({
   selector: 'app-results',

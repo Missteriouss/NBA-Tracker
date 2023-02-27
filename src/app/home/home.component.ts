@@ -1,20 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import {Router} from '@angular/router';
-
-export interface Team {
-  id: number;
-  abbreviation: string;
-  city: string;
-  conference: string;
-  division: string;
-  full_name: string;
-  name: string;
-  scoreResults? : {
-    home_team_score: number,
-    visitor_team_score: number
-  }
-}
+import { ApiService, Team } from '../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,9 +8,9 @@ export interface Team {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  teamOptions: Array<Team> = [];
-  trackingTeams: Array<Team> = [];
-  selectedTeam: Array<Team> = [];
+  teamOptions: Array<Team>;
+  trackingTeams: Array<Team>;
+  selectedTeam: Array<Team>;
   loading: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router) { }
@@ -47,20 +33,46 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('trackingTeams', JSON.stringify(this.trackingTeams))
   }
 
-  getHomeScoreAverage(team) {
-    return Math.round(team.scoreResults.reduce((a, {home_team_score}) => a + home_team_score, 0) / team.scoreResults.length)
+  getCurrentTeamScoreAverage(team: Team) {
+    let total = 0, matchCount = 0;
+    for (let score of team.scoreResults) {
+      if (score.home_team_score !== 0 && score.visitor_team_score !== 0) {
+        if (score.home_team.abbreviation === team.abbreviation) {
+          total += score.home_team_score;
+          matchCount++;
+        }
+        else if (score.visitor_team.abbreviation === team.abbreviation) {
+          total += score.visitor_team_score;
+          matchCount++;
+        }
+      }
+    }
+    return Math.round(total / matchCount);
   }
 
-  getVisitorScoreAverage(team) {
-    return Math.round(team.scoreResults.reduce((a, {visitor_team_score}) => a + visitor_team_score, 0) / team.scoreResults.length)
+  getOpponentTeamScoreAverage(team: Team) {
+    let total = 0, matchCount = 0;
+    for (let score of team.scoreResults) {
+      if (score.home_team_score !== 0 && score.visitor_team_score !== 0) {
+        if (score.home_team.abbreviation !== team.abbreviation) {
+          total += score.home_team_score;
+          matchCount++;
+        }
+        else if (score.visitor_team.abbreviation !== team.abbreviation) {
+          total += score.visitor_team_score;
+          matchCount++;
+        }
+      }
+    }
+    return Math.round(total / matchCount);
   }
 
-  removeCard(id){
+  removeCard(id) {
     this.trackingTeams = this.trackingTeams.filter(value => value.id != id);
     localStorage.setItem('trackingTeams', JSON.stringify(this.trackingTeams))
   }
 
-  showGameResult(team){
+  showGameResult(team) {
     this.router.navigate(['/results', team]);
   }
 }

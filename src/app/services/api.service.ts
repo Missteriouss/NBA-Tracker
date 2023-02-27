@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Data {
+export interface Team {
   id: number;
   abbreviation: string;
   city: string;
@@ -10,30 +10,43 @@ export interface Data {
   division: string;
   full_name: string;
   name: string;
-  scoreResults? : {
-    home_team_score: number;
-    visitor_team_score: number
-  }
+  scoreResults: Array<{
+    home_team_score: number,
+    visitor_team_score: number,
+    home_team: {
+      abbreviation: string;
+    },
+    visitor_team: {
+      abbreviation: string;
+    }
+  }>;
 }
 
 export interface Meta {
   total_pages: number;
   current_page: number;
-  next_page?: any;
+  next_page: number;
   per_page: number;
   total_count: number;
 }
 
 export interface APIResult {
-  data: Data[];
+  data: Team[];
   meta: Meta;
 }
 
 export interface LastResults {
-  data: {
-    home_team_score: number;
-    visitor_team_score: number
-  };
+  data: Array<{
+    home_team_score: number,
+    visitor_team_score: number,
+    home_team: {
+      abbreviation: string;
+    },
+    visitor_team: {
+      abbreviation: string;
+    }
+  }>;
+
   meta: Meta;
 }
 
