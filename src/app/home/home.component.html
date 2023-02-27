@@ -22,8 +22,12 @@
                     <div class="card-data">
                         <p>Results of past 12 days:</p>
                         <p>
-                            <span *ngFor="let result of team.scoreResults" [ngClass]="result.home_team_score > result.visitor_team_score ? 'result-won':'result-lost'">
-                                {{result.home_team_score > result.visitor_team_score ? 'W' : 'L'}}
+                            <span *ngFor="let result of team.scoreResults" [ngClass]="(result.home_team.abbreviation === team.abbreviation && result.home_team_score >
+                                result.visitor_team_score) || ( result.visitor_team.abbreviation === team.abbreviation
+                                && result.visitor_team_score > result.home_team_score ) ? 'result-won':'result-lost'">
+                                {{(result.home_team.abbreviation === team.abbreviation && result.home_team_score >
+                                result.visitor_team_score) || ( result.visitor_team.abbreviation === team.abbreviation
+                                && result.visitor_team_score > result.home_team_score ) ? 'W' : 'L'}}
                             </span>
                         </p>
                       <p>Avg points scored: <strong>{{ getHomeScoreAverage(team) }}</strong></p>
